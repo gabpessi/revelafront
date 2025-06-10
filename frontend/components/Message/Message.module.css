@@ -1,0 +1,66 @@
+.messageContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 8px 0;
+    max-width: 300px;
+    width: fit-content;
+}
+
+.sent {
+    align-self: flex-end;
+    margin-right: 16px;
+}
+
+.received {
+    align-self: flex-start;
+    margin-left: 16px;
+}
+
+.senderName {
+    font-size: 0.8rem;
+    color: #65676b;
+    margin-bottom: 2px;
+    margin-left: 4px;
+}
+
+.message {
+    padding: 8px 12px;
+    border-radius: 12px;
+    position: relative;
+    width: fit-content;
+    min-width: 50px;
+    max-width: 300px;
+}
+
+.sent .message {
+    background-color: #C3A150;
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.received .message {
+    background-color: #e9ecef;
+    color: black;
+    border-bottom-left-radius: 4px;
+}
+
+.content {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.timestamp {
+    font-size: 0.7rem;
+    margin-top: 4px;
+    text-align: right;
+}
+
+.sent .timestamp {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.received .timestamp {
+    color: #65676b;
+} 
