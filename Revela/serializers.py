@@ -58,8 +58,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
         
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(writte_only=True, required=True)
-    password2 = serializers.CharField(writte_only=True, required=True)
+    password = serializers.CharField(write_only=True, required=True)
+    password2 = serializers.CharField(write_only=True, required=True)
     
     def validade(self, data):
         if data['password'] != data['password2']:
