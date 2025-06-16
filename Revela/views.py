@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from .serializers import UserSerializer, RegisterSerializer, PostSerializer
 from .models import Post
+
+
 class UsuarioLogadoView(APIView):
     permission_classes = [IsAuthenticated]
     
@@ -41,7 +43,24 @@ class UserPostsView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
 
-    
+#GET /api/posts - Obter todos os posts do feed
+class FeedPostsView(APIView):
+    permission_classes = [IsAuthenticated]  #ou [AllowAny] se feed público
+
+    def get(self, request):
+        posts = Post.objects.all().order_by('-created_at')
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+#GET /api/posts/:id - Obter detalhes de um post específico
+class PostDetailView(APIView):
+    permission_classes = [IsAuthenticated]  
+
+    def get(self, request, id):
+        post = get_object_or_404(Post, id=id)
+        serializer = PostSerializer(post)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
         
         
     
