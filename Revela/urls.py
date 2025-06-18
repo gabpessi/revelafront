@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .views import UsuarioLogadoView, RegisterView, UserPostsView, FeedPostsView, PostDetailView
+from .views import UsuarioLogadoView, RegisterView, UserPostsView, FeedPostsView, PostDetailView, CreatePostView
 
 urlpatterns = [
     # path('api/usuario', UsuarioLogadoView.as_view(), name='api_usuario')
@@ -10,4 +10,5 @@ urlpatterns = [
     path("api/users/post", UserPostsView.as_view(), name="api_user_post"),
     path('api/posts', FeedPostsView.as_view(), name='feed-posts'),
     path('api/posts/<int:id>/', PostDetailView.as_view(), name='post-detail'),
+    path('api/posts', CreatePostView.as_view(), name='criar-post'),
 ]

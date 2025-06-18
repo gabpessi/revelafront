@@ -1,3 +1,6 @@
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.permissions import IsAuthenticated
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -45,7 +48,7 @@ class UserPostsView(APIView):
 
 #GET /api/posts - Obter todos os posts do feed
 class FeedPostsView(APIView):
-    permission_classes = [IsAuthenticated]  #ou [AllowAny] se feed público
+    permission_classes = [AllowAny]  #IsAuthenticated privado. ou [AllowAny] se feed público
 
     def get(self, request):
         posts = Post.objects.all().order_by('-created_at')
@@ -61,8 +64,14 @@ class PostDetailView(APIView):
         serializer = PostSerializer(post)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-        
-        
-    
-        
-        
+#POST /api/posts - Criar um novo post
+class CreatePostView(APIView):
+    permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]  #upload de imagem
+
+    def post(self, request):
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)  #define o autor do post
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

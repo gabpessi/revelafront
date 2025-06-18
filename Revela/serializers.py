@@ -87,6 +87,14 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     
 class PostSerializer(serializers.ModelSerializer):
+    #hiddenField, o campo não vai aparecer no json, mas vai ser preenchido com o usuario atual
+    #default é o usuario atual logado
+    #garante que o autor seja o usuario logado
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = Post
-        fields = ['id', 'imagem', 'text']
+        fields = ['id', 'imagem', 'text', 'user', 'created_at']
+        #os dois campos abaixo não podem ser alterados pelo usuario
+        read_only_fields = ['id', 'created_at']
+        
