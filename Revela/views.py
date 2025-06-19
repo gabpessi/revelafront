@@ -1,9 +1,9 @@
 from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework import status
 from .serializers import UserSerializer, RegisterSerializer, PostSerializer
@@ -57,12 +57,20 @@ class FeedPostsView(APIView):
 
 #GET /api/posts/:id - Obter detalhes de um post específico
 class PostDetailView(APIView):
-    permission_classes = [IsAuthenticated]  
+    permission_classes = [AllowAny]  
 
     def get(self, request, id):
         post = get_object_or_404(Post, id=id)
         serializer = PostSerializer(post)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+#DELETE /api/posts/:id - Excluir um post específico
+    def delete(self, request, id):
+        post = get_object_or_404(Post, id=id)
+        if post.user != request.user:
+            return Response({"detail": "Você não tem permissão para excluir este post."}, status=status.HTTP_403_FORBIDDEN)
+        post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 #POST /api/posts - Criar um novo post
 class CreatePostView(APIView):

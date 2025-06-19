@@ -4,9 +4,9 @@ POST /api/auth/register - Para registro de usuário -- FEITO
 
 Endpoints de Posts:
 GET /api/posts - Obter todos os posts do feed -- Feito/rever
-POST /api/posts - Criar um novo post
+POST /api/posts - Criar um novo post -- Feito/Rever
 GET /api/posts/:id - Obter um post específico -- Feito/rever
-DELETE /api/posts/:id - Deletar um post
+DELETE /api/posts/:id - Deletar um post -- Feito/rever
 
 Endpoints de Mensagens:
 GET /api/conversations - Obter todas as conversas
