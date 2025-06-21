@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+from django.core.exceptions import ValidationError
 
 class UserProfile(models.Model):
         user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
@@ -14,7 +14,32 @@ class UserProfile(models.Model):
         
 #modelo básico de posts, atualizar depois
 class Post(models.Model):
-        user = models.ForeignKey(User, on_delete=models.CASCADE, name="post")
+        user = models.ForeignKey(User, on_delete=models.CASCADE)
         imagem = models.ImageField(upload_to='user/posts/images/%y/%m/%d', null=True, blank=True)
         text = models.CharField(max_length=150, null=True, blank=True)
         created_at = models.DateTimeField(default=timezone.now)
+
+
+class Conversation(models.Model):
+    user1 = models.ForeignKey(User, related_name='conversations_as_user1', on_delete=models.CASCADE)
+    user2 = models.ForeignKey(User, related_name='conversations_as_user2', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user1', 'user2')  # impede duplicação
+
+    def clean(self):
+        if self.user1 == self.user2:
+            raise ValidationError("Não é possível iniciar conversa consigo mesmo.")
+
+    def participants(self):
+        return [self.user1, self.user2]
+
+    def get_other_user(self, current_user):
+        return self.user2 if self.user1 == current_user else self.user1
+
+class Message(models.Model):
+    conversation = models.ForeignKey(Conversation, related_name='messages', on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)

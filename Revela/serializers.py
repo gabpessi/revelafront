@@ -1,6 +1,7 @@
-from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import UserProfile, Post
+
+from django.contrib.auth.models import User
+from .models import UserProfile, Post, Conversation, Message
   
 class UserSerializer(serializers.ModelSerializer):
     #campo adicional profile para retornar informações complementares do usuario
@@ -85,16 +86,48 @@ class RegisterSerializer(serializers.ModelSerializer):
         profile.save()
         return user
     
-    
+    class Meta:
+        model = User
+        fields = ["username", "email", "password", "password2"]   
+         
 class PostSerializer(serializers.ModelSerializer):
     #hiddenField, o campo não vai aparecer no json, mas vai ser preenchido com o usuario atual
     #default é o usuario atual logado
     #garante que o autor seja o usuario logado
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    
+    #Reni vou mudar isso aqui pq o serializer ele não é só pra posts de um usuario, então a gente precisa ter as informações de quem
+    #postou na resposta também, incluindo o modelo de userprofile pra ter informações tipo imagem do user
+    # user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    
+    user = serializers.SerializerMethodField()
+    #retorna info do user e do userprofile por padrão já
+    def get_user(self, post):
+        return UserSerializer(post.user).data
 
     class Meta:
         model = Post
-        fields = ['id', 'imagem', 'text', 'user', 'created_at']
+        fields = ['id', 'imagem', 'text', 'created_at', 'user', ]
         #os dois campos abaixo não podem ser alterados pelo usuario
         read_only_fields = ['id', 'created_at']
         
+        
+class MessageSerializer(serializers.ModelSerializer):
+    sender = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Message
+        fields = ['id', 'conversation', 'sender', 'content', 'timestamp']
+        read_only_fields = ['sender', 'timestamp']
+
+class ConversationSerializer(serializers.ModelSerializer):
+    user1 = UserSerializer(read_only=True)
+    user2 = UserSerializer(read_only=True)
+    last_message = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Conversation
+        fields = ['id', 'user1', 'user2', 'created_at', 'last_message']
+
+    def get_last_message(self, obj):
+        msg = obj.messages.order_by('-timestamp').first()
+        return MessageSerializer(msg).data if msg else None

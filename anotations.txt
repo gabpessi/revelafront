@@ -9,16 +9,16 @@ GET /api/posts/:id - Obter um post específico -- Feito/rever
 DELETE /api/posts/:id - Deletar um post -- Feito/rever
 
 Endpoints de Mensagens:
-GET /api/conversations - Obter todas as conversas
+GET /api/conversations - Obter todas as conversas -- FEITO
 GET /api/conversations/:id/messages - Obter mensagens de uma conversa específica
 POST /api/conversations/:id/messages - Enviar uma nova mensagem em uma conversa
-POST /api/conversations - Criar uma nova conversa
-GET /api/conversations/:id - Obter uma conversa específica
+POST /api/conversations - Criar uma nova conversa -- FEITO
+GET /api/conversations/:id - Obter uma conversa específica --FEITO
 
 Endpoints de Perfil:
 GET /api/users/:id - Obter informações do perfil do usuário --FEITO
 PUT /api/users/:id - Atualizar perfil do usuário --FEITO
-GET /api/users/:id/posts - Obter posts de um usuário específico 
+GET /api/users/:id/posts - Obter posts de um usuário específico --FEITO
 
 Endpoints de Upload:
 POST /api/upload - Upload de imagens/arquivos para posts e mensagens
