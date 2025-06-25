@@ -3,29 +3,31 @@ import { useSearchParams } from 'react-router-dom';
 import MessagesTable from "../../components/MessagesTable/MessagesTable"
 import ChatWindow from "../../components/ChatWindow/ChatWindow"
 import styles from "./Messages.module.css"
+import { fetchConversationsData } from '../../src/services/conversations';
 
 export default function Messages() {
     const [searchParams] = useSearchParams();
     const [selectedConversation, setSelectedConversation] = useState(null);
+    const [conversations, setConversations] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // Mock de conversas
-    const conversations = [
-        {
-            id: 1,
-            name: "Maria",
-            profilePicture: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            lastMessage: "Olá! Como posso ajudar?",
-            timestamp: new Date()
-        },
-        {
-            id: 2,
-            name: "João",
-            profilePicture: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            lastMessage: "Tudo bem?",
-            timestamp: new Date()
+    useEffect(() => {
+        async function fetchConversations() {
+            setLoading(true);
+            try {
+                const conversationsData = await fetchConversationsData();
+                setConversations(conversationsData);
+            } catch (err) {
+                setError('Erro ao carregar conversas');
+            } finally {
+                setLoading(false);
+            }
         }
-    ];
+        fetchConversations();
+    }, []);
 
+    //seleciona conversa
     useEffect(() => {
         const conversationId = searchParams.get('conversation');
         if (conversationId) {
@@ -33,18 +35,29 @@ export default function Messages() {
         }
     }, [searchParams]);
 
+    const handleBack = () => {
+        setSelectedConversation(null);
+    };
+
     return (
         <div className={styles.messagesContainer}>
             <div className={styles.messagesSidebar}>
+                {loading && <p>Carregando conversas...</p>}
+                {error && <p>{error}</p>}
                 <MessagesTable
                     conversations={conversations}
                     selectedConversation={selectedConversation}
                     onSelectConversation={setSelectedConversation}
+                    isMessagesPage={!selectedConversation}
                 />
             </div>
-            <div className={styles.messagesContent}>
+            <div className={`${styles.messagesContent} ${selectedConversation ? styles.active : ''}`}>
                 {selectedConversation ? (
-                    <ChatWindow conversationId={selectedConversation} />
+                    <ChatWindow 
+                        conversationId={selectedConversation}
+                        conversationName={conversations.find(c => c.id === selectedConversation)?.name}
+                        onBack={handleBack}
+                    />
                 ) : (
                     <div className={styles.noConversationSelected}>
                         Selecione uma conversa para começar

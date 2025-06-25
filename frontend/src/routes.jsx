@@ -6,6 +6,9 @@ import Messages from '../pages/Messages/Messages';
 import Profile from '../pages/Profile/Profile';
 import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
+import ProtectedRoute from '../components/Route/ProtectedRoute';
+import PublicRoute from '../components/Route/PublicRoute';
+import NotFound from '../pages/NotFound/NotFound';
 
 export const router = createBrowserRouter([
   {
@@ -14,28 +17,36 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Feed />
+        element: <ProtectedRoute><Feed /></ProtectedRoute>
       },
       {
         path: '/create',
-        element: <Create />
+        element: <ProtectedRoute><Create /></ProtectedRoute>
       },
       {
         path: '/messages',
-        element: <Messages />
+        element: <ProtectedRoute><Messages /></ProtectedRoute>
       },
       {
         path: '/profile',
-        element: <Profile />
+        element: <ProtectedRoute><Profile /></ProtectedRoute>
+      },
+      {
+        path: '*',
+        element: <NotFound />
       }
     ]
   },
   {
     path: '/login',
-    element: <Login />
+    element: <PublicRoute><Login /></PublicRoute>
   },
   {
     path: '/register',
-    element: <Register />
+    element: <PublicRoute><Register /></PublicRoute>
+  },
+  {
+    path: '*',
+    element: <NotFound />
   }
 ]); 

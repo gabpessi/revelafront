@@ -1,16 +1,22 @@
 .content {
     display: flex;
-    flex-direction: row;    
-    height: 100vh;
+    flex-direction: row;        
     width: 100%;
     gap: 20px;
-    padding-left: 320px; /* 300px da tabela + 20px de gap */
+    padding-left: 320px;
 }
 
 .feed {
-    padding-top: 50px;
+    padding-top: 55px;
+    padding-bottom: 50px;
     flex: 1;
     max-width: 400px;
     margin: 0 auto;
     width: 100%;
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: 0px 20px;
+    }
 }

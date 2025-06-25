@@ -1,13 +1,9 @@
-.MessageCard {
-    display: flex;
-    padding: 10px 10px 10px 0;
-}
-
-.MessageCard img {
+.profilePic{
     width: 54px;
     height: 54px;
     border-radius: 50%;
     object-fit: cover;
+    border: 1px solid #ccc;
 }
 
 .username {
@@ -34,6 +30,7 @@
     cursor: pointer;
     transition: background-color 0.2s;
     border-bottom: 1px solid #e0e0e0;
+    gap: 10px;
 }
 
 .messageCard:hover {
