@@ -1,6 +1,5 @@
 .button {
   background-color: #C3A150;
-  
   color: white;
   padding: 10px 20px;
   border: none;
@@ -9,4 +8,9 @@
   cursor: pointer;
   max-width: 308px;
   width: 100%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.button:hover {
+  background-color: #D4B15D;
 }

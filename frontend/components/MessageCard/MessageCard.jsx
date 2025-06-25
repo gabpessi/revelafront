@@ -1,4 +1,6 @@
 import styles from './MessageCard.module.css';
+import { getImageUrl } from '../../src/services/api';
+import defaultProfile from '../../src/assets/default-profile.jpg';
 
 export default function MessageCard({ profilePicture, username, ultimaMensagem, isSelected, onClick }) {
     return (
@@ -6,7 +8,11 @@ export default function MessageCard({ profilePicture, username, ultimaMensagem, 
             className={`${styles.messageCard} ${isSelected ? styles.selected : ''}`}
             onClick={onClick}
         >
-            <img src={profilePicture} alt={username} className={styles.profilePicture} />
+            <img
+            className={styles.profilePic}
+            src={profilePicture ? getImageUrl(profilePic) : defaultProfile}
+            alt="Foto de perfil"
+                    />
             <div className={styles.messageInfo}>
                 <h3>{username}</h3>
                 <p>{ultimaMensagem}</p>

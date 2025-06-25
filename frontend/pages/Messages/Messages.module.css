@@ -1,6 +1,6 @@
 .messagesContainer {
     display: flex;
-    height: calc(100vh - 64px);
+    height: calc(100vh - 55px);
     width: 100%;
    
 }
@@ -28,3 +28,33 @@
     color: #65676b;
     font-size: 1.2rem;
 } 
+
+@media (max-width: 768px) {
+    .messagesContainer {
+        flex-direction: column;
+    }
+    .noConversationSelected {
+        display: none;
+    }
+
+    .messagesSidebar {
+        width: 100%;
+        min-width: 100%;
+        height: 100%;
+        border-right: none;
+    }
+
+    .messagesContent {
+        position: fixed;
+        top: 55px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 55px);
+        z-index: 100;
+        display: none;
+    }
+
+    .messagesContent.active {
+        display: flex;
+    }
+}

@@ -15,7 +15,7 @@ nav {
 }
 
 .logo { 
-    width: 200px;
+    width: 150px;
 }
 
 ul {
@@ -51,7 +51,23 @@ ul {
     transition: all 0.3s ease;
 }
 
-/* Tablet and Mobile Styles */
+
+.logoutButton {
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  padding: 0 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.logoutButton:hover {
+  color: #a31515;
+}
+
+
 @media (max-width: 768px) {
     .hamburger {
         display: flex;
@@ -92,4 +108,3 @@ ul {
         transform: translateY(-9px) rotate(-45deg);
     }
 }
-
