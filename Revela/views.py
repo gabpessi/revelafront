@@ -19,16 +19,23 @@ class UsuarioLogadoView(APIView):
     def get(self, request):
         user = request.user
         serializer = UserSerializer(user)
-        return Response(serializer.data)
+        return Response(serializer.data, )
 
     def put(self, request):
         user = request.user
         serializer = UserSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, )
         return Response(serializer.errors, status=400)
     
+    
+class UsersView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data,  status=status.HTTP_200_OK)
 class RegisterView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):

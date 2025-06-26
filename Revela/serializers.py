@@ -62,7 +62,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
     password2 = serializers.CharField(write_only=True, required=True)
     
-    def validade(self, data):
+    def validate(self, data):
         if data['password'] != data['password2']:
             raise serializers.ValidationError('Senhas devem ser iguais')
     
@@ -116,7 +116,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
-        fields = ['id', 'conversation', 'sender', 'content', 'timestamp']
+        fields = ['id', 'conversation', 'sender', 'content', 'timestamp', 'image']
         read_only_fields = ['sender', 'timestamp']
 
 class ConversationSerializer(serializers.ModelSerializer):
