@@ -4,6 +4,7 @@ import Message from '../Message/Message';
 import { IoArrowBack, IoAttach, IoClose, IoSend } from 'react-icons/io5'
 import {getMessagesAPI, sendMessageAPI } from '../../src/services/messages';
 import { getUserIdFromToken } from '../../src/utils/jwt';
+import { getImageUrl } from '../../src/services/api';
 
 export default function ChatWindow({ conversationId, onBack, conversationName }) {  
     const [messages, setMessages] = useState([]);
@@ -97,7 +98,7 @@ export default function ChatWindow({ conversationId, onBack, conversationName })
             }
             let sent;
             if (token) {
-                sent = await sendMessageAPI(conversationId, newMessage, token);
+                sent = await sendMessageAPI(conversationId, newMessage, token, selectedFile);
             }
             // Adiciona isSent e senderName
             const sentWithIsSent = {
@@ -107,6 +108,10 @@ export default function ChatWindow({ conversationId, onBack, conversationName })
             };
             setMessages(prevMessages => [...prevMessages, sentWithIsSent]);
             setNewMessage('');
+            setSelectedFile(null); // Limpa o arquivo após envio
+            if (fileInputRef.current) {
+                fileInputRef.current.value = '';
+            }
         } catch (err) {
             setError('Erro ao enviar mensagem');
         }
@@ -129,7 +134,7 @@ export default function ChatWindow({ conversationId, onBack, conversationName })
                     timestamp={message.timestamp}
                     isSent={message.isSent}
                     senderName={message.senderName}
-                    file={message.file}
+                    image={getImageUrl(message.image)}
                 />
                 ))}
                 <div ref={messagesEndRef} />

@@ -23,7 +23,7 @@ export default function Login() {
         setMessage("");
         setHasError(false);
         try {
-            const data = await apiFetch("/auth/login/", {
+            const data = await apiFetch("/auth/login", {
                 method: "POST",
                 body: JSON.stringify({ username, password }),
             });

@@ -1,33 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import MessagesTable from "../../components/MessagesTable/MessagesTable"
 import ChatWindow from "../../components/ChatWindow/ChatWindow"
 import styles from "./Messages.module.css"
-import { fetchConversationsData } from '../../src/services/conversations';
+import { useMessagingData } from '../../src/hooks/useMessagingData';
 
 export default function Messages() {
     const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
     const [selectedConversation, setSelectedConversation] = useState(null);
-    const [conversations, setConversations] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { conversations, users, loading, createOrGetConversation } = useMessagingData();
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        async function fetchConversations() {
-            setLoading(true);
-            try {
-                const conversationsData = await fetchConversationsData();
-                setConversations(conversationsData);
-            } catch (err) {
-                setError('Erro ao carregar conversas');
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchConversations();
-    }, []);
-
-    //seleciona conversa
     useEffect(() => {
         const conversationId = searchParams.get('conversation');
         if (conversationId) {
@@ -39,6 +23,16 @@ export default function Messages() {
         setSelectedConversation(null);
     };
 
+    // Cria conversa ao clicar em usuário
+    async function handleSelectUser(user) {
+        try {
+            const conversation = await createOrGetConversation(user.id);
+            setSelectedConversation(conversation.id);
+        } catch (err) {
+            setError('Erro ao iniciar conversa');
+        }
+    }
+
     return (
         <div className={styles.messagesContainer}>
             <div className={styles.messagesSidebar}>
@@ -46,8 +40,10 @@ export default function Messages() {
                 {error && <p>{error}</p>}
                 <MessagesTable
                     conversations={conversations}
+                    users={users}
                     selectedConversation={selectedConversation}
                     onSelectConversation={setSelectedConversation}
+                    onSelectUser={handleSelectUser}
                     isMessagesPage={!selectedConversation}
                 />
             </div>

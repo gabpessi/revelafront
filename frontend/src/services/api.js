@@ -20,6 +20,11 @@ export async function apiFetch(endpoint, options = {}) {
     headers,
   });
   if (!response.ok) {
+    if (response.status === 401) {
+      alert('Você precisa estar logado. Faça login.');
+      window.location.href = '/login';
+      throw new Error('Você precisa estar logado. Faça login.');
+    }
     throw new Error('Erro na requisição');
   }
 
