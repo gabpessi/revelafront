@@ -4,20 +4,18 @@ import MessagesTable from "../../components/MessagesTable/MessagesTable";
 import styles from './Feed.module.css';
 import { useEffect, useState } from 'react';
 import { apiFetch } from "../../src/services/api";
-import { fetchConversationsData } from '../../src/services/conversations';
+import { useMessagingData } from '../../src/hooks/useMessagingData';
 
 export default function Feed() {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
-    const [conversations, setConversations] = useState([]);
     const [postsLoading, setPostsLoading] = useState(true);
-    const [conversationsLoading, setConversationsLoading] = useState(true);
     const [postsError, setPostsError] = useState(null);
-    const [conversationsError, setConversationsError] = useState(null);
+    const { conversations, users, loading, createOrGetConversation } = useMessagingData();
+    const [selectedConversation, setSelectedConversation] = useState(null);
 
     useEffect(() => {
         async function fetchData() {
-            // Buscar posts
             setPostsLoading(true);
             try {
                 const postsData = await apiFetch("/posts");
@@ -28,25 +26,25 @@ export default function Feed() {
             } finally {
                 setPostsLoading(false);
             }
-
-            // Buscar conversas
-            setConversationsLoading(true);
-            try {
-                const conversationsData = await fetchConversationsData();
-                setConversations(conversationsData);
-            } catch (error) {
-                console.error("Erro ao buscar conversas:", error);
-                setConversationsError("Erro ao carregar conversas");
-            } finally {
-                setConversationsLoading(false);
-            }
         }
         fetchData();
     }, []);
 
     const handleSelectConversation = (conversationId) => {
+        setSelectedConversation(conversationId);
         navigate(`/messages?conversation=${conversationId}`);
     };
+
+    // Criar conversa ao clicar em usuário
+    async function handleSelectUser(user) {
+        try {
+            const conversation = await createOrGetConversation(user.id);
+            setSelectedConversation(conversation.id);
+            navigate(`/messages?conversation=${conversation.id}`);
+        } catch (err) {
+            alert('Erro ao iniciar conversa');
+        }
+    }
 
     // remover o post deletado do feed
     const handleDelete = (id) => {
@@ -57,7 +55,11 @@ export default function Feed() {
         <div className={styles.content}>
             <MessagesTable 
                 conversations={conversations}
+                users={users}
+                selectedConversation={selectedConversation}
                 onSelectConversation={handleSelectConversation}
+                onSelectUser={handleSelectUser}
+                className={styles.hidden}
             />
             <div className={styles.feed}>
                 {postsLoading && <p>Carregando posts...</p>}

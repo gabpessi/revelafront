@@ -2,14 +2,24 @@ import { useState } from 'react';
 import styles from './MessagesTable.module.css';
 import MessageCard from '../MessageCard/MessageCard';
 
-export default function MessagesTable({ conversations = [], selectedConversation, onSelectConversation, isMessagesPage = false }) { 
+export default function MessagesTable({ conversations = [], users = [], selectedConversation, onSelectConversation, onSelectUser, isMessagesPage = false }) {
     const [busca, setBusca] = useState('');
+    const loggedUserId = localStorage.getItem('userId');
 
-    const filteredConversations = conversations.filter(conversation => 
-        conversation.name.toLowerCase().includes(busca.toLowerCase())
-    );
+    // Busca usuários filtrados
+    const filteredUsers = users
+        .filter(user => String(user.id) !== String(loggedUserId))
+        .filter(user => user.username.toLowerCase().includes(busca.toLowerCase()));
 
-    return ( 
+    // saber se já existe conversa com o user
+    function getConversationWithUser(userId) {
+        return conversations.find(conv =>
+            (conv.user1 && conv.user1.id === userId) ||
+            (conv.user2 && conv.user2.id === userId)
+        );
+    }
+
+    return (
         <div className={`${styles.tabelaMensagens} ${isMessagesPage ? styles.messagesPage : ''}`}> 
             <h2>Mensagens</h2>
             <input
@@ -18,16 +28,26 @@ export default function MessagesTable({ conversations = [], selectedConversation
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
             />
-            {filteredConversations.map(conversation => (
-                <MessageCard 
-                    key={conversation.id}
-                    profilePicture={conversation.profilePicture}
-                    username={conversation.name}
-                    ultimaMensagem={conversation.lastMessage}
-                    isSelected={selectedConversation === conversation.id}
-                    onClick={() => onSelectConversation(conversation.id)}
-                />
-            ))}
+            {filteredUsers.map(user => {
+                const existingConv = getConversationWithUser(user.id);
+                return (
+                    <MessageCard
+                        key={user.id}
+                        profilePic={user.profile?.imagem}
+                        username={user.username}
+                        ultimaMensagem={existingConv ? existingConv.lastMessage : ''}
+                        isSelected={String(selectedConversation) === String(existingConv && existingConv.id)}
+                        onClick={() => {
+                            if (existingConv) {
+                                onSelectConversation(existingConv.id);
+                            } else {
+                                onSelectUser(user);
+                            }
+                        }}
+                        hasConversation={!!existingConv}
+                    />
+                );
+            })}
         </div>
-    )
+    );
 }

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Modal from '../../components/Modal/Modal.jsx';
 import { getImageUrl } from '../../src/services/api';
 import defaultProfile from '../../src/assets/default-profile.jpg';
+import ImageModal from '../ImageModal/ImageModal';
 
 export default function Post({ id, profilePic, username, postPic, postDescription, userId, onDelete, created_at, Date: postDate, Time: postTime }) {
   const [showMenu, setShowMenu] = useState(false);
@@ -117,14 +118,12 @@ export default function Post({ id, profilePic, username, postPic, postDescriptio
         cancelText="Cancelar"
       />
 
-      {showImageModal && (
-        <div className={styles.imageModalOverlay} onClick={() => setShowImageModal(false)}>
-          <div className={styles.imageModalContent} onClick={e => e.stopPropagation()}>
-            <button className={styles.closeButton} onClick={() => setShowImageModal(false)}>×</button>
-            <img src={getImageUrl(postPic)} alt="Post grande" className={styles.imageModalImg} />
-          </div>
-        </div>
-      )}
+      <ImageModal
+        isOpen={showImageModal}
+        onClose={() => setShowImageModal(false)}
+        imageUrl={getImageUrl(postPic)}
+        altText="Post grande"
+      />
     </div>
   );
 }
