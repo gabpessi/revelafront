@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Feed />
+        element: <ProtectedRoute><Feed /></ProtectedRoute>
       },
       {
         path: '/create',
