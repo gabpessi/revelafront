@@ -6,7 +6,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://localhost:8000',
+      '/api': 'https://backend-796l.onrender.com',
     }
-  }
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+  },
+  base: '/'
 })

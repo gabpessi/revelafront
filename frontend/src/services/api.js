@@ -1,6 +1,6 @@
 //import { getUserIdFromToken } from '../utils/jwt';
 //muda aqui na produção
-const API_URL = "http://localhost:8000/api";
+const API_URL = "https://backend-796l.onrender.com/api";
 
 function getToken() {
   return localStorage.getItem('token');
@@ -66,9 +66,9 @@ export function getCurrentUserId() {
 }
   */
 
- // Pra produção tem que alterar a URL aqui- criação do url de imagens
- export const API_CONFIG = {
-  baseURL: 'http://localhost:8000',
+ // Configuração para imagens (Cloudinary)
+ export const IMAGE_CONFIG = {
+  baseURL: 'https://res.cloudinary.com/dpetkbxpu/',
 }
 
 //criar url completa da imagem
@@ -78,6 +78,6 @@ export const getImageUrl = (imagePath) => {
   // se já é uma URL completa retorna como ta
   if (imagePath.startsWith('http')) return imagePath;
   
-  // constrói a URL completa
-  return `${API_CONFIG.baseURL}${imagePath}`;
+  // constrói a URL completa usando Cloudinary
+  return `${IMAGE_CONFIG.baseURL}${imagePath}`;
 }; 
