@@ -3,9 +3,8 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import UsersView,UsuarioLogadoView, RegisterView, UserPostsView, FeedPostsView, PostDetailView, CreatePostView, ConversationListCreateView, ConversationDetailView,  MessageListCreateView
 
-from django.views.static import serve
-from django.urls import re_path
-from ..Web import settings
+
+
 urlpatterns = [
     # path('api/usuario', UsuarioLogadoView.as_view(), name='a  pi_usuario')
     path("api/auth/register", RegisterView.as_view(), name="api_register_user"),
@@ -22,11 +21,7 @@ urlpatterns = [
     path('api/conversations/<int:id>/messages', MessageListCreateView.as_view()),
 ]
 
-urlpatterns += [
-    re_path(r'^media/(?P<path>.*)$', serve, {
-        'document_root': settings.MEDIA_ROOT,
-    }),
-]
+
 
 from django.contrib.auth.models import User
 
