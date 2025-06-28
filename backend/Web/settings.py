@@ -29,7 +29,7 @@ DATABASES = {
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret")
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 
@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'Revela',
     'corsheaders',
+    'cloudinary',
+    'cloudinary_storage'
 ]
 
 MIDDLEWARE = [
@@ -170,3 +172,12 @@ SIMPLE_JWT = {
 
 MEDIA_URL = '/media/' 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get("CLOUD_NAME", "fallback-secret"),
+    'API_KEY': os.environ.get("API_KEY", "fallback-secret"),
+    'API_SECRET': os.environ.get("API_SECRET", "fallback-secret"),
+}
