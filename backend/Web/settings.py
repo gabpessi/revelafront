@@ -177,7 +177,7 @@ SIMPLE_JWT = {
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get("CLOUD_NAME", "fallback-secret"),
-    'API_KEY': os.environ.get("API_KEY", "fallback-secret"),
-    'API_SECRET': os.environ.get("API_SECRET", "fallback-secret"),
+    'CLOUD_NAME': "dpetkbxpu",
+    'API_KEY': "529727629926789",
+    'API_SECRET': "3PFkh8QruidI49DbNujXT6pSZbY",
 }
