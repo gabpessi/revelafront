@@ -1,0 +1,127 @@
+.content {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;    
+}
+
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center; 
+    flex: 1;
+    height: 100vh;
+}
+
+.logoAndForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    padding: 20px;   
+    width: 100%;
+    max-width: 310px;
+}
+
+.loginImg {
+    height: 100vh;
+    width: auto;
+    max-width: 50vw;
+    object-fit: cover;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.logo {
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 300;
+    color: #C3A150;
+    text-align: center;
+    margin-top: -200px;   
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input {
+    padding: 15px 10px;
+    border: 1px solid #EEEEEE;
+    border-radius: 10px;
+    width: 100%;
+    background-color: #EEEEEE;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #C3A150;
+    background-color: #FFFFFF;
+}
+
+.inputError {
+    border-color: #ff4444 !important;
+    background-color: #fff5f5 !important;
+}
+
+.inputError:focus {
+    border-color: #ff4444 !important;
+    background-color: #fff5f5 !important;
+}
+
+.createAccountLink {
+    color: #C3A150;
+    cursor: pointer;
+    font-weight: 500;    
+    transition: color 0.2s;
+}
+
+.createAccountLink:hover {
+    color: #a88a3c;
+}
+
+.spinnerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.cadastrar {
+    margin-top: 10px;
+}
+
+@media (max-width: 1025px) {
+    .loginImg {
+        display: none;
+    }
+
+}
