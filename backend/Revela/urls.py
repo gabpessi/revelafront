@@ -18,3 +18,11 @@ urlpatterns = [
     path('api/conversations/<int:id>', ConversationDetailView.as_view()),
     path('api/conversations/<int:id>/messages', MessageListCreateView.as_view()),
 ]
+
+from django.contrib.auth.models import User
+
+def create_admin():
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser("admin", "admin@example.com", "senha123")
+
+create_admin()

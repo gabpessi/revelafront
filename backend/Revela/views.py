@@ -34,11 +34,6 @@ class UsersView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
         
-        if not User.objects.filter(username="admin").exists():
-            user = User.objects.create_superuser("admin", "admin@gmail.com", "senha123")
-            user.save()
-
-
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data,  status=status.HTTP_200_OK)
