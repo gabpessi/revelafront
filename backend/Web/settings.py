@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 
-
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 DATABASES = {
     'default': dj_database_url.config(default=os.environ.get("DATABASE_URL"))
 }
@@ -42,13 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary',
+    'cloudinary_storage'
     'django.contrib.staticfiles',
      'rest_framework_simplejwt',
     'rest_framework',
     'Revela',
     'corsheaders',
-    'cloudinary',
-    'cloudinary_storage'
+
 ]
 
 MIDDLEWARE = [
@@ -174,7 +175,7 @@ SIMPLE_JWT = {
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': "dpetkbxpu",
