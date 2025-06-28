@@ -5,7 +5,7 @@ from .views import UsersView,UsuarioLogadoView, RegisterView, UserPostsView, Fee
 
 from django.views.static import serve
 from django.urls import re_path
-
+from ..Web import settings
 urlpatterns = [
     # path('api/usuario', UsuarioLogadoView.as_view(), name='a  pi_usuario')
     path("api/auth/register", RegisterView.as_view(), name="api_register_user"),
