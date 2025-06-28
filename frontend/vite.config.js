@@ -8,5 +8,10 @@ export default defineConfig({
     proxy: {
       '/api': 'https://backend-796l.onrender.com',
     }
-  }
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+  },
+  base: '/'
 })
