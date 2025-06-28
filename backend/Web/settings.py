@@ -185,7 +185,7 @@ SIMPLE_JWT = {
 import cloudinary
 
 cloudinary.config( 
-  cloud_name = "dpetkbxpu", 
-  api_key = "529727629926789", 
-  api_secret = "3PFkh8QruidI49DbNujXT6pSZbY"
+  cloud_name = os.environ.get("CLOUD_NAME", "fallback-secret"), 
+  api_key = os.environ.get("API_KEY", "fallback-secret"), 
+  api_secret = os.environ.get("API_SECRET", "fallback-secret")
 )
