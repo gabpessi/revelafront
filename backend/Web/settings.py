@@ -176,8 +176,16 @@ SIMPLE_JWT = {
 
 
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': "dpetkbxpu",
-    'API_KEY': "529727629926789",
-    'API_SECRET': "3PFkh8QruidI49DbNujXT6pSZbY",
-}
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': "dpetkbxpu",
+#     'API_KEY': "529727629926789",
+#     'API_SECRET': "3PFkh8QruidI49DbNujXT6pSZbY",
+# }
+
+import cloudinary
+
+cloudinary.config( 
+  cloud_name = "dpetkbxpu", 
+  api_key = "529727629926789", 
+  api_secret = "3PFkh8QruidI49DbNujXT6pSZbY"
+)
