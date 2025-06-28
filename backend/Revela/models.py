@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from cloudinary.models import CloudinaryField
 class UserProfile(models.Model):
         user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-        imagem = CloudinaryField(upload_to='user/profiles/%y/%m/%d', null=True, blank=True)
+        imagem = CloudinaryField('user/profiles/%y/%m/%d', null=True, blank=True)
         sobre = models.CharField(max_length=150, null=True, blank=True)
         facebook = models.CharField(max_length=1000, null=True, blank=True)
         instagram = models.CharField(max_length=1000, null=True, blank=True)
@@ -15,7 +15,7 @@ class UserProfile(models.Model):
 #modelo básico de posts, atualizar depois
 class Post(models.Model):
         user = models.ForeignKey(User, on_delete=models.CASCADE)
-        imagem = CloudinaryField(upload_to='user/posts/images/%y/%m/%d', null=True, blank=True)
+        imagem = CloudinaryField('user/posts/images/%y/%m/%d', null=True, blank=True)
         text = models.CharField(max_length=150, null=True, blank=True)
         created_at = models.DateTimeField(default=timezone.now)
 
@@ -40,7 +40,7 @@ class Conversation(models.Model):
 
 class Message(models.Model):
     conversation = models.ForeignKey(Conversation, related_name='messages', on_delete=models.CASCADE)
-    image = CloudinaryField(upload_to='messages/images/%y/%m/%d', null=True, blank=True)
+    image = CloudinaryField('messages/images/%y/%m/%d', null=True, blank=True)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
