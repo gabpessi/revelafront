@@ -42,12 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',
     'django.contrib.staticfiles',
      'rest_framework_simplejwt',
     'rest_framework',
     'Revela',
     'corsheaders',
+    'cloudinary_storage',
     'cloudinary',
 ]
 
