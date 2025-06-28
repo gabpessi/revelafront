@@ -65,15 +65,13 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-       "http://localhost:5174",
-       "http://localhost:5173",
+       "https://revelaweb.vercel.app",
+       
    ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5174",
-    "http://localhost:5173",
+    "https://revelaweb.vercel.app",
 ]
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
