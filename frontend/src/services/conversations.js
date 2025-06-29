@@ -7,21 +7,32 @@ export async function fetchConversationsData() {
     if (token) {
         try {
             userId = getUserIdFromToken(token);
+            console.log('User ID from token:', userId);
         } catch (e) {
+            console.error('Error getting user ID from token:', e);
             userId = null;
         }
     }
     
     let conversationsData = [];
     if (token) {
-        conversationsData = await getConversationsAPI(token);
+        try {
+            console.log('Fetching conversations from API...');
+            conversationsData = await getConversationsAPI(token);
+            console.log('Raw conversations data:', conversationsData);
+        } catch (error) {
+            console.error('Error fetching conversations:', error);
+            throw error;
+        }
     }
 
     // formato esperado pela tabela
     let tableData = [];
     if (token) {
         tableData = conversationsData.map(conv => {
+            console.log('Processing conversation:', conv);
             const otherUser = conv.user1.id === userId ? conv.user2 : conv.user1;
+            console.log('Other user:', otherUser);
             return {
                 id: conv.id,
                 userId: otherUser.id,
@@ -35,5 +46,6 @@ export async function fetchConversationsData() {
         tableData = conversationsData;
     }
     
+    console.log('Final table data:', tableData);
     return tableData;
 } 

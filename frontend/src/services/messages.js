@@ -1,20 +1,37 @@
 // Busca conversas
 export async function getConversationsAPI(token) {
-  const response = await fetch('/api/conversations', {
+  const API_URL = process.env.NODE_ENV === 'production' 
+    ? "https://backend-796l.onrender.com/api"  // URL real do seu backend em produção
+    : "http://localhost:8000/api";
+    
+  console.log('Fetching conversations from:', `${API_URL}/conversations`);
+  
+  const response = await fetch(`${API_URL}/conversations`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   });
+  
+  console.log('Conversations response status:', response.status);
+  
   if (!response.ok) {
+    console.error('Error fetching conversations:', response.status, response.statusText);
     throw new Error('Erro ao buscar conversas');
   }
-  return response.json();
+  
+  const data = await response.json();
+  console.log('Conversations data received:', data);
+  return data;
 }
 
 // Busca mensagens
 export async function getMessagesAPI(conversationId, token) {
-  const response = await fetch(`/api/conversations/${conversationId}/messages`, {
+  const API_URL = process.env.NODE_ENV === 'production' 
+    ? "https://backend-796l.onrender.com/api"  // URL real do seu backend em produção
+    : "http://localhost:8000/api";
+    
+  const response = await fetch(`${API_URL}/conversations/${conversationId}/messages`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
@@ -28,7 +45,11 @@ export async function getMessagesAPI(conversationId, token) {
 
 // Envia mensagem
 export async function sendMessageAPI(conversationId, content, token) {
-  const response = await fetch(`/api/conversations/${conversationId}/messages`, {
+  const API_URL = process.env.NODE_ENV === 'production' 
+    ? "https://backend-796l.onrender.com/api"  // URL real do seu backend em produção
+    : "http://localhost:8000/api";
+    
+  const response = await fetch(`${API_URL}/conversations/${conversationId}/messages`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -44,7 +65,11 @@ export async function sendMessageAPI(conversationId, content, token) {
 
 // Busca todos os usuários
 export async function getAllUsersAPI(token) {
-  const response = await fetch('/api/users', {
+  const API_URL = process.env.NODE_ENV === 'production' 
+    ? "https://backend-796l.onrender.com/api"  // URL real do seu backend em produção
+    : "http://localhost:8000/api";
+    
+  const response = await fetch(`${API_URL}/users`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',

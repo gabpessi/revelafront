@@ -1,6 +1,8 @@
 //import { getUserIdFromToken } from '../utils/jwt';
 //muda aqui na produção
-const API_URL = "http://localhost:8000/api";
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? "https://backend-796l.onrender.com/api" 
+  : "http://localhost:8000/api";
 
 function getToken() {
   return localStorage.getItem('token');
@@ -15,11 +17,18 @@ export async function apiFetch(endpoint, options = {}) {
   if (!(options.body instanceof FormData) && !headers['Content-Type']) {
     headers['Content-Type'] = 'application/json';
   }
+  
+  console.log('Making API request to:', `${API_URL}${endpoint}`);
+  
   const response = await fetch(`${API_URL}${endpoint}`, {
     ...options,
     headers,
   });
+  
+  console.log('API response status:', response.status);
+  
   if (!response.ok) {
+    console.error('API error:', response.status, response.statusText);
     throw new Error('Erro na requisição');
   }
 
@@ -68,7 +77,9 @@ export function getCurrentUserId() {
 
  // Pra produção tem que alterar a URL aqui- criação do url de imagens
  export const API_CONFIG = {
-  baseURL: 'http://localhost:8000',
+  baseURL: process.env.NODE_ENV === 'production'
+    ? 'https://backend-796l.onrender.com'  // URL real do seu backend em produção
+    : 'http://localhost:8000',
 }
 
 //criar url completa da imagem
