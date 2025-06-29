@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './MessagesTable.module.css';
 import MessageCard from '../MessageCard/MessageCard';
 
-export default function MessagesTable({ conversations = [], users = [], selectedConversation, onSelectConversation, onSelectUser, isMessagesPage = false }) {
+export default function MessagesTable({ conversations = [], selectedConversation, onSelectConversation, isMessagesPage = false }) { 
     const [busca, setBusca] = useState('');
 
     console.log('MessagesTable received conversations:', conversations);
@@ -14,7 +14,7 @@ export default function MessagesTable({ conversations = [], users = [], selected
 
     console.log('Filtered conversations:', filteredConversations);
 
-    return (
+    return ( 
         <div className={`${styles.tabelaMensagens} ${isMessagesPage ? styles.messagesPage : ''}`}> 
             <h2>Mensagens</h2>
             <input
@@ -38,5 +38,5 @@ export default function MessagesTable({ conversations = [], users = [], selected
                 ))
             )}
         </div>
-    );
+    )
 }
