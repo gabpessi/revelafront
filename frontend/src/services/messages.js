@@ -51,11 +51,8 @@ export async function sendMessageAPI(conversationId, content, token) {
     
   const response = await fetch(`${API_URL}/conversations/${conversationId}/messages`, {
     method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ content, conversation: conversationId }),
+    headers,
+    body,
   });
   if (!response.ok) {
     throw new Error('Erro ao enviar mensagem');

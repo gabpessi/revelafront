@@ -6,10 +6,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://localhost:8000',
+      '/api': 'https://backend-796l.onrender.com',
     }
   },
-  define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-  }
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+  },
+  base: '/'
 })

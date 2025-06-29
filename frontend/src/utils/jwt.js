@@ -15,4 +15,4 @@ export function decodeJWT(token) {
 export function getUserIdFromToken(token) {
   const payload = decodeJWT(token);
   return payload && payload.user_id ? payload.user_id : null;
-} 
+}

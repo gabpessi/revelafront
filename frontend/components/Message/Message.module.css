@@ -63,4 +63,19 @@
 
 .received .timestamp {
     color: #65676b;
+}
+
+.imageWrapper {
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.image {
+    max-width: 220px;
+    max-height: 180px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: block;
+    margin: 0 auto;
 } 
