@@ -5,11 +5,12 @@
       "destination": "https://backend-796l.onrender.com/api/$1"
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!api).*)",
       "destination": "/index.html"
     }
   ],
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": "vite"
+  "framework": "vite",
+  "description": "Frontend Revela - Forçando novo deploy"
 } 
